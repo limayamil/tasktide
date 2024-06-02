@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Input, List } from 'antd';
+import { Button, Input, List, notification } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import './NoteTaking.css';
 
@@ -25,6 +25,9 @@ const NoteTaking = () => {
     const updatedNotes = notes.filter((n) => n !== note);
     setNotes(updatedNotes);
     localStorage.setItem('notes', JSON.stringify(updatedNotes));
+    notification.success({
+      message: 'Nota eliminada'
+    });
   };
 
   const toggleNoteContent = (note) => {
@@ -42,7 +45,7 @@ const NoteTaking = () => {
           setIsContentVisible(true);  // Show content input when title is clicked or typed
         }}
         onBlur={() => {
-          if (!newNoteContent.trim()) {
+          if (!newNoteTitle.trim()) {
             setIsContentVisible(false);  // Hide content input when title input loses focus and content is empty
           }
         }}
@@ -62,16 +65,17 @@ const NoteTaking = () => {
         dataSource={notes}
         renderItem={(item) => (
           <List.Item
+            className='bg-zinc-900 rounded-lg mt-5'
             actions={[
               <DeleteOutlined
-                className='text-white absolute top-0 right-0'
+                className='text-white'
                 type="delete"
                 onClick={() => handleDeleteNote(item)}
               />,
             ]}
           >
-            <div style={{ width: '100%' }}>
-              <div className='text-white' onClick={() => toggleNoteContent(item)} style={{ cursor: 'pointer', fontWeight: 'bold' }}>
+            <div style={{ width: '100%' }} className='text-left px-5'>
+              <div className='text-white font-bold' onClick={() => toggleNoteContent(item)} style={{ cursor: 'pointer' }}>
                 {item.title}
               </div>
               {expandedNote === item && (
