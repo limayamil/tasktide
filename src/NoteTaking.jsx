@@ -36,7 +36,7 @@ const NoteTaking = () => {
 
   return (
     <div>
-      <h1 className="text-4xl font-bold underline mb-10">Tasktide</h1>
+      <h1 className="text-4xl font-bold underline mb-10">Tidier Tasks</h1>
       <Input
         placeholder="Título de nota"
         value={newNoteTitle}
