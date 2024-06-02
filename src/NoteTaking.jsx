@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Input, List } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import './NoteTaking.css';
 
 const NoteTaking = () => {
   const [notes, setNotes] = useState(JSON.parse(localStorage.getItem('notes')) || []);
@@ -34,7 +35,7 @@ const NoteTaking = () => {
     <div>
       <h1 className="text-4xl font-bold underline mb-10">Tasktide</h1>
       <Input
-        placeholder="Note Title"
+        placeholder="Título de nota"
         value={newNoteTitle}
         onChange={(e) => {
           setNewNoteTitle(e.target.value);
@@ -49,7 +50,7 @@ const NoteTaking = () => {
       />
       {isContentVisible && (
         <Input.TextArea
-          placeholder="Note Content"
+          placeholder="Contenido de la nota"
           value={newNoteContent}
           onChange={(e) => setNewNoteContent(e.target.value)}
           rows={4}
