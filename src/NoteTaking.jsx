@@ -28,7 +28,7 @@ const SortableItem = ({ item, index, handleEditNote, handleDeleteNote, toggleNot
       style={style}
       {...attributes}
       {...listeners}
-      className='bg-zinc-900 rounded-lg mt-5'
+      className='bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-lg mt-5'
       actions={
         editNote === item ? [] : [
           <EditOutlined
