@@ -9,3 +9,11 @@
 .ant-empty .ant-empty-description {
     color: white !important;
 }
+
+.note-item-actions {
+    display: none;
+  }
+  
+  .note-item:hover .note-item-actions {
+    display: flex;
+  }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Input, List, Modal, notification, Checkbox } from 'antd';
-import { DeleteOutlined, EditOutlined, SaveOutlined, CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, SaveOutlined, CloseOutlined, PlusOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -26,19 +26,21 @@ const SortableItem = ({ item, index, handleEditNote, handleDeleteNote, toggleNot
     <List.Item
       ref={setNodeRef}
       style={style}
+      onClick={() => toggleNoteContent(item)}
       {...attributes}
       {...listeners}
-      className='bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-lg mt-5'
+      className='bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-lg mt-5 note-item'
       actions={
         editNote === item ? [] : [
+          <div className='flex absolute right-100 -top-1 content-center'>
           <EditOutlined
-            className='text-white'
+            className='text-white note-item-actions ml-5'
             onClick={() => handleEditNote(item)}
-          />,
+          />
           <DeleteOutlined
-            className='text-white'
+            className='text-white note-item-actions ml-5'
             onClick={() => handleDeleteNote(item)}
-          />,
+          /></div>
         ]
       }
     >
@@ -64,15 +66,16 @@ const SortableItem = ({ item, index, handleEditNote, handleDeleteNote, toggleNot
         </div>
       ) : (
         <div style={{ width: '100%' }} className='text-left px-5'>
-          <div className="flex">
+          <div className="flex items-center">
             <Checkbox
               checked={item.completed}
               onChange={() => toggleNoteCompletion(item)}
               style={{ marginRight: '8px' }}
             />
-            <div className='text-white font-bold' onClick={() => toggleNoteContent(item)} style={{ cursor: 'pointer', textDecoration: item.completed ? 'line-through' : 'none' }}>
+            <div className='text-white font-bold'  style={{ cursor: 'pointer', textDecoration: item.completed ? 'line-through' : 'none' }}>
               {item.title}
             </div>
+            {expandedNote === item ? <UpOutlined className='ml-2 text-zinc-500' /> : <DownOutlined className='ml-2 text-zinc-500' />}
           </div>
           {expandedNote === item && (
             <div className='text-white mt-3 whitespace-pre-wrap'>
