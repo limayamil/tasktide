@@ -7,6 +7,8 @@ import { CSS } from '@dnd-kit/utilities';
 import { PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import './NoteTaking.css';
 import dayjs from 'dayjs';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const SortableItem = ({ item, index, handleEditNote, handleDeleteNote, toggleNoteContent, expandedNote, editNote, editTitle, setEditTitle, editContent, setEditContent, handleSaveEdit, handleCancelEdit, toggleNoteCompletion }) => {
   const {
@@ -51,11 +53,11 @@ const SortableItem = ({ item, index, handleEditNote, handleDeleteNote, toggleNot
             onChange={(e) => setEditTitle(e.target.value)}
             style={{ marginBottom: '8px' }}
           />
-          <Input.TextArea
+          <ReactQuill
             value={editContent}
-            onChange={(e) => setEditContent(e.target.value)}
-            rows={4}
+            onChange={setEditContent}
             style={{ marginBottom: '8px' }}
+            className='bg-white'
           />
           <Button type="primary" icon={<SaveOutlined />} onClick={handleSaveEdit} style={{ marginRight: '8px' }}>
             Guardar
@@ -78,9 +80,7 @@ const SortableItem = ({ item, index, handleEditNote, handleDeleteNote, toggleNot
             {expandedNote === item ? <UpOutlined className='ml-2 text-zinc-500' /> : <DownOutlined className='ml-2 text-zinc-500' />}
           </div>
           {expandedNote === item && (
-            <div className='text-white mt-3 whitespace-pre-wrap'>
-              {item.content}
-            </div>
+            <div className='text-white mt-3 whitespace-pre-wrap' dangerouslySetInnerHTML={{ __html: item.content }} />
           )}
         </div>
       )}
@@ -247,11 +247,11 @@ const NoteTaking = () => {
           onChange={(e) => setNewNoteTitle(e.target.value)}
           style={{ marginBottom: '8px' }}
         />
-        <Input.TextArea
+        <ReactQuill
           placeholder="Contenido de la nota"
           value={newNoteContent}
-          onChange={(e) => setNewNoteContent(e.target.value)}
-          rows={4}
+          onChange={setNewNoteContent}
+          style={{ height: '200px', marginBottom: '8px' }}
         />
       </Modal>
     </div>
