@@ -2,13 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { Button, Input, List, Modal, notification, Checkbox } from 'antd';
 import { DeleteOutlined, EditOutlined, SaveOutlined, CloseOutlined, PlusOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
 import { DndContext, closestCenter } from '@dnd-kit/core';
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable } from '@dnd-kit/sortable';
+import { arrayMove, SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import './NoteTaking.css';
 import dayjs from 'dayjs';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+
+const modules = {
+  toolbar: [
+    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ 'script': 'sub'}, { 'script': 'super' }],
+    [{ 'color': [] }, { 'background': [] }],
+    [{ 'align': [] }],
+    ['link', 'image'],
+    ['clean']
+  ],
+};
 
 const SortableItem = ({ item, index, handleEditNote, handleDeleteNote, toggleNoteContent, expandedNote, editNote, editTitle, setEditTitle, editContent, setEditContent, handleSaveEdit, handleCancelEdit, toggleNoteCompletion }) => {
   const {
@@ -58,6 +71,7 @@ const SortableItem = ({ item, index, handleEditNote, handleDeleteNote, toggleNot
             onChange={setEditContent}
             style={{ marginBottom: '8px' }}
             className='bg-white'
+            modules={modules}
           />
           <Button type="primary" icon={<SaveOutlined />} onClick={handleSaveEdit} style={{ marginRight: '8px' }}>
             Guardar
@@ -252,6 +266,7 @@ const NoteTaking = () => {
           value={newNoteContent}
           onChange={setNewNoteContent}
           style={{ height: '200px', marginBottom: '8px' }}
+          modules={modules}
         />
       </Modal>
     </div>
